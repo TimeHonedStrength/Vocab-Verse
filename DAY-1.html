@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VocabVerse</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --pink:#f472b6;
+  --blue:#38bdf8;
+  --purple:#a78bfa;
+  --green:#4ade80;
+  --yellow:#facc15;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(120deg,#020617,#1e1b4b,#020617);
+  background-size:300% 300%;
+  animation:bgMove 12s ease infinite;
+  color:#fff;
+  overflow:hidden;
+}
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+.page{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  transition:0.7s cubic-bezier(.68,-0.6,.32,1.6);
+}
+
+/* HOME */
+#home{
+  flex-direction:column;
+}
+
+.logo{
+  font-size:50px;
+  font-weight:800;
+  background:linear-gradient(90deg,var(--pink),var(--blue),var(--purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:10px;
+}
+.tagline{color:#c7d2fe;margin-bottom:40px}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,190px);
+  gap:22px;
+}
+
+.word-btn{
+  padding:24px;
+  text-align:center;
+  border-radius:25px;
+  background:linear-gradient(135deg,#0ea5e9,#6366f1);
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 20px 40px rgba(0,0,0,0.5);
+  transition:0.4s;
+  position:relative;
+  overflow:hidden;
+}
+
+.word-btn:nth-child(2){background:linear-gradient(135deg,#f472b6,#ec4899)}
+.word-btn:nth-child(3){background:linear-gradient(135deg,#facc15,#fb923c)}
+.word-btn:nth-child(4){background:linear-gradient(135deg,#4ade80,#22c55e)}
+.word-btn:nth-child(5){background:linear-gradient(135deg,#a78bfa,#6366f1)}
+.word-btn:nth-child(6){background:linear-gradient(135deg,#38bdf8,#0ea5e9)}
+
+.word-btn::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(255,255,255,0.2);
+  opacity:0;
+}
+.word-btn:hover::after{opacity:1}
+.word-btn:hover{
+  transform:translateY(-10px) scale(1.08);
+}
+
+/* DETAIL */
+#detail{transform:translateX(100%)}
+
+.card{
+  width:460px;
+  padding:34px;
+  border-radius:30px;
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  box-shadow:0 40px 90px rgba(0,0,0,0.8);
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{50%{transform:translateY(-12px)}}
+
+.word{
+  font-size:42px;
+  font-weight:800;
+  text-align:center;
+  background:linear-gradient(90deg,var(--pink),var(--blue),var(--purple));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.pron{text-align:center;color:#c7d2fe;margin:10px 0 22px}
+
+.section{margin-bottom:14px;font-size:14px}
+.label{color:var(--yellow);font-weight:700}
+
+.chips span{
+  display:inline-block;
+  margin:6px 6px 0 0;
+  padding:6px 14px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#334155,#475569);
+  font-size:12px;
+}
+
+.example{
+  background:linear-gradient(135deg,#0ea5e9,#0284c7);
+  padding:12px;
+  border-radius:12px;
+  margin-top:6px;
+}
+
+.visual{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  padding:12px;
+  border-radius:12px;
+  margin-top:6px;
+}
+
+.back{
+  text-align:center;
+  margin-top:22px;
+  font-weight:600;
+  cursor:pointer;
+  color:#94a3b8;
+}
+.back:hover{color:#38bdf8}
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+<div id="home" class="page">
+  <div class="logo">VocabVerse</div>
+  <div class="tagline">Tap a word. Feel it. Remember it.</div>
+
+  <div class="grid">
+    <div class="word-btn" onclick="openWord(0)">Begrudgingly</div>
+    <div class="word-btn" onclick="openWord(1)">Incorrigible</div>
+    <div class="word-btn" onclick="openWord(2)">Doppelgänger</div>
+    <div class="word-btn" onclick="openWord(3)">Exalt</div>
+    <div class="word-btn" onclick="openWord(4)">Lambaste</div>
+    <div class="word-btn" onclick="openWord(5)">Munificence</div>
+  </div>
+</div>
+
+<!-- DETAIL -->
+<div id="detail" class="page">
+  <div class="card" id="card"></div>
+</div>
+
+<script>
+const words=[
+{
+title:"Begrudgingly",
+pron:"bih-GRUJ-ing-lee • Adverb",
+meaning:"Doing something unwillingly or with resentment",
+context:["Help","Permission","Agreement"],
+example:"He begrudgingly agreed to help his teammate.",
+family:["Verb: Begrudge","Adj: Begrudging","Adv: Begrudgingly"],
+syn:["Reluctantly","Unwillingly"],
+ant:["Willingly","Gladly"],
+visual:"Imagine doing a favor while feeling annoyed."
+},
+{
+title:"Incorrigible",
+pron:"in-KOR-ij-uh-buhl • Adjective",
+meaning:"Impossible to change or improve",
+context:["Habits","Behavior","Character"],
+example:"He is an incorrigible optimist.",
+family:["Noun: Incorrigibility","Adv: Incorrigibly"],
+syn:["Hopeless","Persistent"],
+ant:["Correctable","Reformable"],
+visual:"A habit repeating again and again."
+},
+{
+title:"Doppelgänger",
+pron:"DOP-uhl-gang-er • Noun",
+meaning:"A person who looks exactly like another",
+context:["Stories","Movies","Real life"],
+example:"I saw my doppelgänger at the station.",
+family:["Plural: Doppelgängers"],
+syn:["Look-alike","Double"],
+ant:["Unique","Original"],
+visual:"Seeing your own face in someone else."
+},
+{
+title:"Exalt",
+pron:"ig-ZAWLT • Verb",
+meaning:"To praise highly or raise to a higher level",
+context:["Leaders","Values","Religion"],
+example:"The nation exalted the bravery of its soldiers.",
+family:["Noun: Exaltation","Adj: Exalted"],
+syn:["Praise","Honor"],
+ant:["Criticize","Humiliate"],
+visual:"Someone lifted high with respect."
+},
+{
+title:"Lambaste",
+pron:"lam-BAST • Verb",
+meaning:"To criticize very harshly",
+context:["Politics","Media","Mistakes"],
+example:"The coach lambasted the team.",
+family:["Noun: Lambasting","Adj: Lambasting"],
+syn:["Scold","Condemn"],
+ant:["Praise","Appreciate"],
+visual:"A person being shouted at strongly."
+},
+{
+title:"Munificence",
+pron:"myoo-NIF-uh-suhns • Noun",
+meaning:"Great generosity in giving",
+context:["Charity","Donations","Leaders"],
+example:"The school was built through his munificence.",
+family:["Adj: Munificent","Adv: Munificently"],
+syn:["Generosity","Benevolence"],
+ant:["Stinginess","Miserliness"],
+visual:"Someone giving freely with joy."
+}
+];
+
+function openWord(i){
+  const w=words[i];
+  card.innerHTML=`
+  <div class="word">${w.title}</div>
+  <div class="pron">${w.pron}</div>
+
+  <div class="section"><span class="label">Meaning</span><br>${w.meaning}</div>
+  <div class="section"><span class="label">Context</span><div class="chips">${w.context.map(c=>`<span>${c}</span>`).join("")}</div></div>
+  <div class="section"><span class="label">Example</span><div class="example">${w.example}</div></div>
+  <div class="section"><span class="label">Word Family</span><div class="chips">${w.family.map(f=>`<span>${f}</span>`).join("")}</div></div>
+  <div class="section"><span class="label">Synonyms</span><div class="chips">${w.syn.map(s=>`<span>${s}</span>`).join("")}</div></div>
+  <div class="section"><span class="label">Antonym</span><div class="chips">${w.ant.map(a=>`<span>${a}</span>`).join("")}</div></div>
+  <div class="section"><span class="label">Visualization</span><div class="visual">${w.visual}</div></div>
+
+  <div class="back" onclick="goBack()">← Back to words</div>
+  `;
+  home.style.transform="translateX(-100%)";
+  detail.style.transform="translateX(0)";
+}
+function goBack(){
+  home.style.transform="translateX(0)";
+  detail.style.transform="translateX(100%)";
+}
+</script>
+
+</body>
+</html>
